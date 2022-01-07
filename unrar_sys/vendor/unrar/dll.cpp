@@ -89,7 +89,8 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
         else
           r->OpenResult=ERAR_BAD_ARCHIVE;
       }
-      return (HANDLE) Data;
+      delete Data;
+      return NULL;
     }
     r->Flags=0;
     
@@ -473,6 +474,7 @@ static int RarErrorToDll(RAR_EXIT ErrCode)
   switch(ErrCode)
   {
     case RARX_FATAL:
+    case RARX_READ:
       return ERAR_EREAD;
     case RARX_CRC:
       return ERAR_BAD_DATA;
